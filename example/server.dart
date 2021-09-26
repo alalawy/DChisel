@@ -1,4 +1,4 @@
-import 'package:dart_chisel/dchisel.dart';
+import 'package:dchisel/dchisel.dart';
 
 import 'routes/routes.dart';
 
