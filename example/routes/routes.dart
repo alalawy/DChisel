@@ -1,4 +1,4 @@
-import 'package:dart_chisel/chisel.dart';
+import 'package:dart_chisel/dchisel.dart';
 
 class Routes {
   void routes() {
