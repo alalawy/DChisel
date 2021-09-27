@@ -9,8 +9,6 @@ class Routes {
         username: 'postgres',
         password: '14091996Aa`'); // DB CONFIGURATION
 
-    void ado() {}
-
     DChisel().routeGet('/', (Request request) {
       return DChiselDB().getAll('users');
     });
