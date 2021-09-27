@@ -9,6 +9,8 @@ class Routes {
         username: 'postgres',
         password: '14091996Aa`'); // DB CONFIGURATION
 
+    void ado() {}
+
     DChisel().routeGet('/', (Request request) {
       return DChiselDB().getAll('users');
     });
@@ -18,6 +20,10 @@ class Routes {
     DChisel().routeGet('/users/<name>', (Request request, String name) {
       return DChiselDB()
           .getOption('users', colum: 'email', where: ['name', '%$name%']);
-    }); //ROUTES
+    });
+    DChisel().routePost('/users/add', (Request request) async {
+      return DChiselDB().create('users', data: await request.body.asJson);
+    });
+    //ROUTES
   }
 }

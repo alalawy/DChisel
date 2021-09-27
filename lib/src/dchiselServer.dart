@@ -13,15 +13,22 @@ var _username = '';
 var _password = '';
 
 var _routeGet = [];
+var _routePost = [];
 var _dbFunctionGet = [];
-List<Function> _dataHandler = [];
+List<Function> _dataHandlerGet = [];
+List<Function> _dataHandlerPost = [];
 
 List<Map<String, dynamic>>? base = [];
 
 class DChisel {
   void routeGet(String route, Function data) {
     _routeGet.add(route);
-    _dataHandler.add(data);
+    _dataHandlerGet.add(data);
+  }
+
+  void routePost(String route, Function data) {
+    _routePost.add(route);
+    _dataHandlerPost.add(data);
   }
 
   Future<void> serve({serverHost, serverPort}) async {
@@ -29,7 +36,10 @@ class DChisel {
 
     RouterPlus routerData() {
       for (var i = 0; i < _routeGet.length; i++) {
-        routes.get(_routeGet[i], _dataHandler[i]);
+        routes.get(_routeGet[i], _dataHandlerGet[i]);
+      }
+      for (var i = 0; i < _routePost.length; i++) {
+        routes.post(_routePost[i], _dataHandlerPost[i]);
       }
 
       return routes;
@@ -107,6 +117,48 @@ class DChiselDB {
             errorData = 1;
             errorMessage = error.toString();
           });
+
+    if (resultMap != null) {
+      for (final row in resultMap!) {
+        _data.add(row[table] ?? {'': ''});
+      }
+    }
+    var _base = {
+      'error': errorData,
+      'data': _data,
+      'message': errorMessage ?? 'Success'
+    };
+    return _base;
+  }
+
+  Future<Map<String, dynamic>> create(table,
+      {required Map<String, dynamic>? data}) async {
+    List<Map<String, dynamic>>? resultMap;
+
+    var _data = <Map<String, dynamic>>[];
+    var _dataMap = <String, dynamic>{};
+
+    data!.forEach((key, value) {
+      var _key = key;
+      _key = key.replaceAll(key, '@$key');
+      _dataMap[_key] = value;
+    });
+
+    var connection = PostgreSQLConnection(_host, _port, _db,
+        username: _username, password: _password);
+
+    await connection.open();
+
+    await connection
+        .mappedResultsQuery(
+            'INSERT INTO $table ${data.keys} VALUES ${_dataMap.keys}',
+            substitutionValues: data)
+        .then((value1) {
+      resultMap = value1;
+    }).onError((error, stackTrace) {
+      errorData = 1;
+      errorMessage = error.toString();
+    });
 
     if (resultMap != null) {
       for (final row in resultMap!) {
