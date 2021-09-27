@@ -24,7 +24,7 @@ class DChisel {
     _dataHandler.add(data);
   }
 
-  Future<void> serve(serverHost, serverPort) async {
+  Future<void> serve({serverHost, serverPort}) async {
     var routes = Router().plus;
 
     RouterPlus routerData() {

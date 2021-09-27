@@ -2,7 +2,7 @@ import 'package:dchisel/dchisel.dart';
 
 import 'routes/routes.dart';
 
-void main(List<String> arguments) {
+Future<void> main(List<String> arguments) async {
   Routes().routes();
-  DChisel().serve(null, null); // SERVER
+  DChisel().serve();
 }

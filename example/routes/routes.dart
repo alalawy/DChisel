@@ -1,7 +1,7 @@
 import 'package:dchisel/dchisel.dart';
 
 class Routes {
-  void routes() {
+  Future<void> routes() async {
     DChiselDB().configDB(
         host: 'localhost',
         db: 'dart_test',
@@ -10,6 +10,9 @@ class Routes {
         password: '14091996Aa`'); // DB CONFIGURATION
 
     DChisel().routeGet('/', (Request request) {
+      return DChiselDB().getAll('users');
+    });
+    DChisel().routeGet('/users', (Request request) {
       return DChiselDB().getAll('users');
     });
     DChisel().routeGet('/users/<name>', (Request request, String name) {
