@@ -22,6 +22,16 @@ class Routes {
     DChisel().routePost('/users/add', (Request request) async {
       return DChiselDB().create('users', data: await request.body.asJson);
     });
+    DChisel().routeDelete('/users/<id>', (Request request, String id) {
+      return DChiselDB().deleteOption('users', where: ['id', int.parse(id)]);
+    });
+    DChisel().routeDelete('/deleteall/users', (Request request) {
+      return DChiselDB().deleteAll('users');
+    });
+    DChisel().routePut('/users/<id>', (Request request, String id) async {
+      return DChiselDB().update('users',
+          data: await request.body.asJson, where: ['id', int.parse(id)]);
+    });
     //ROUTES
   }
 }
