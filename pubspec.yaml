@@ -12,6 +12,7 @@ dependencies:
   shelf_router: ^1.0.0
   postgres: ^2.4.1+2
   shelf_plus: ^0.0.2
+  mysql1: ^0.19.2
 
 executables:
   dchisel: dchisel

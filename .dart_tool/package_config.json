@@ -80,6 +80,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "mysql1",
+      "rootUri": "file:///Users/mnasrulalawy/.pub-cache/hosted/pub.dartlang.org/mysql1-0.19.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path",
       "rootUri": "file:///Users/mnasrulalawy/.pub-cache/hosted/pub.dartlang.org/path-1.8.0",
       "packageUri": "lib/",
@@ -88,6 +94,12 @@
     {
       "name": "pedantic",
       "rootUri": "file:///Users/mnasrulalawy/.pub-cache/hosted/pub.dartlang.org/pedantic-1.11.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "pool",
+      "rootUri": "file:///Users/mnasrulalawy/.pub-cache/hosted/pub.dartlang.org/pool-1.5.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -212,7 +224,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-09-28T02:07:48.958008Z",
+  "generated": "2021-09-28T03:54:30.316362Z",
   "generator": "pub",
   "generatorVersion": "2.13.4"
 }

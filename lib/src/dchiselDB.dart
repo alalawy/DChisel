@@ -7,9 +7,11 @@ var _port = 5432;
 var _db = '';
 var _username = '';
 var _password = '';
+var _database = '';
 
 class DChiselDB {
-  void configDB({host, port, db, username, password}) {
+  void configDB(database, {host, port, db, username, password}) {
+    _database = database;
     _host = host;
     _port = port;
     _db = db;
@@ -22,16 +24,20 @@ class DChiselDB {
 
     var _data = <Map<String, dynamic>>[];
 
-    var connection = PostgreSQLConnection(_host, _port, _db,
-        username: _username, password: _password);
-    await connection.open();
+    if (_database == 'postgre') {
+      var connection = PostgreSQLConnection(_host, _port, _db,
+          username: _username, password: _password);
+      await connection.open();
 
-    await connection.mappedResultsQuery('SELECT * FROM $table').then((value1) {
-      resultMap = value1;
-    }).onError((error, stackTrace) {
-      errorData = 1;
-      errorMessage = error.toString();
-    });
+      await connection
+          .mappedResultsQuery('SELECT * FROM $table')
+          .then((value1) {
+        resultMap = value1;
+      }).onError((error, stackTrace) {
+        errorData = 1;
+        errorMessage = error.toString();
+      });
+    } else if (_database == 'mysql') {}
 
     if (resultMap != null) {
       for (final row in resultMap!) {

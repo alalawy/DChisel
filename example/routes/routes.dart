@@ -2,7 +2,7 @@ import 'package:dchisel/dchisel.dart';
 
 class Routes {
   Future<void> routes() async {
-    DChiselDB().configDB(
+    DChiselDB().configDB('postgre',
         host: 'localhost',
         db: 'dart_test',
         port: 5432,
