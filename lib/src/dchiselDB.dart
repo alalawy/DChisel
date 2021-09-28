@@ -1,3 +1,4 @@
+import 'package:mysql1/mysql1.dart';
 import 'package:postgres/postgres.dart';
 
 var errorData = 0;
@@ -23,6 +24,7 @@ class DChiselDB {
     List<Map<String, dynamic>>? resultMap;
 
     var _data = <Map<String, dynamic>>[];
+    var val;
 
     if (_database == 'postgre') {
       var connection = PostgreSQLConnection(_host, _port, _db,
@@ -37,13 +39,35 @@ class DChiselDB {
         errorData = 1;
         errorMessage = error.toString();
       });
-    } else if (_database == 'mysql') {}
 
-    if (resultMap != null) {
-      for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
+      if (resultMap != null) {
+        for (final row in resultMap!) {
+          _data.add(row[table] ?? {'': ''});
+        }
+      }
+    } else if (_database == 'mysql') {
+      // ignore: unnecessary_new
+      var settings = new ConnectionSettings(
+          host: _host,
+          port: _port,
+          user: _username,
+          password: _password,
+          db: _db);
+      var conn = await MySqlConnection.connect(settings);
+      await conn.query('select * from users').then((value1) {
+        val = value1;
+      }).onError((error, stackTrace) {
+        errorData = 1;
+        errorMessage = error.toString();
+      });
+
+      if (val != null) {
+        val.forEach((element) {
+          _data.add(element.fields);
+        });
       }
     }
+
     var _base = {
       'error': errorData,
       'data': _data,
