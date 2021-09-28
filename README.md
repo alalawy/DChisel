@@ -36,7 +36,7 @@ DChisel().routeGet('/hello', (Request request) {
 ```
 GET with param you can use :
 ```dart
-DChisel().routeGet('/getparam/<name>', (Request request, Strinf name) {
+DChisel().routeGet('/getparam/<name>', (Request request, String name) {
     return 'Hello, $name';
 });
 ```
