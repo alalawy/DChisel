@@ -47,7 +47,7 @@ class DChiselDB {
   }
 
   Future<Map<String, dynamic>> getOption(table,
-      {colum = '*', List? where}) async {
+      {column = '*', List? where}) async {
     List<Map<String, dynamic>>? resultMap;
 
     var _data = <Map<String, dynamic>>[];
@@ -58,7 +58,7 @@ class DChiselDB {
 
     where != null
         ? await connection.mappedResultsQuery(
-            'SELECT $colum FROM $table WHERE ${where[0]} LIKE @value',
+            'SELECT $column FROM $table WHERE ${where[0]} LIKE @value',
             substitutionValues: {'value': where[1]}).then((value1) {
             resultMap = value1;
           }).onError((error, stackTrace) {
@@ -66,7 +66,7 @@ class DChiselDB {
             errorMessage = error.toString();
           })
         : await connection
-            .mappedResultsQuery('SELECT $colum FROM $table')
+            .mappedResultsQuery('SELECT $column FROM $table')
             .then((value1) {
             resultMap = value1;
           }).onError((error, stackTrace) {

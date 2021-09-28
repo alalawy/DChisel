@@ -19,7 +19,7 @@ class Routes {
 
     DChisel().routeGet('/users/<name>', (Request request, String name) {
       return DChiselDB()
-          .getOption('users', colum: 'email', where: ['name', '%$name%']);
+          .getOption('users', column: 'email', where: ['name', '%$name%']);
     }); // GET ONE DATA USERS FROM DB EITH FILTER BY NAME
 
     DChisel().routePost('/users/add', (Request request) async {
