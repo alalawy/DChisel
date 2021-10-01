@@ -1,7 +1,11 @@
+import 'package:postgres/postgres.dart';
+
 class Postgre {
-  Future<Map<String, dynamic>> getAll(connection, table) async {
-    var errorData = 0;
-    var errorMessage;
+  var errorData = 0;
+  var errorMessage;
+
+  Future<Map<String, dynamic>> getAll(
+      PostgreSQLConnection connection, table) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
 
@@ -26,10 +30,8 @@ class Postgre {
     return _base;
   }
 
-  Future<Map<String, dynamic>> getOption(connection, table,
+  Future<Map<String, dynamic>> getOption(PostgreSQLConnection connection, table,
       {column, where}) async {
-    var errorData = 0;
-    var errorMessage;
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
     where != null
@@ -63,10 +65,8 @@ class Postgre {
     return _base;
   }
 
-  Future<Map<String, dynamic>> create(connection, table,
+  Future<Map<String, dynamic>> create(PostgreSQLConnection connection, table,
       {required Map<String, dynamic>? data}) async {
-    var errorData = 0;
-    var errorMessage;
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
     var _dataMap = <String, dynamic>{};
@@ -101,9 +101,8 @@ class Postgre {
     return _base;
   }
 
-  Future<Map<String, dynamic>> deleteAll(connection, table) async {
-    var errorData = 0;
-    var errorMessage;
+  Future<Map<String, dynamic>> deleteAll(
+      PostgreSQLConnection connection, table) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
 
@@ -127,10 +126,9 @@ class Postgre {
     return _base;
   }
 
-  Future<Map<String, dynamic>> deleteOption(connection, table,
+  Future<Map<String, dynamic>> deleteOption(
+      PostgreSQLConnection connection, table,
       {required List? where}) async {
-    var errorData = 0;
-    var errorMessage;
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
 
@@ -156,10 +154,8 @@ class Postgre {
     return _base;
   }
 
-  Future<Map<String, dynamic>> update(connection, table,
+  Future<Map<String, dynamic>> update(PostgreSQLConnection connection, table,
       {required Map<String, dynamic>? data, required List? where}) async {
-    var errorData = 0;
-    var errorMessage;
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
     var _dataMap = <String, dynamic>{};

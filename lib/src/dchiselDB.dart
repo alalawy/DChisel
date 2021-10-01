@@ -26,7 +26,7 @@ class DChiselDB {
       var connection = PostgreSQLConnection(_host, _port, _db,
           username: _username, password: _password);
       await connection.open();
-      db = await Postgre().getAll(connection, table);
+      db = Postgre().getAll(connection, table);
     } else if (_database == 'mysql') {
       // ignore: unnecessary_new
       var settings = new ConnectionSettings(
