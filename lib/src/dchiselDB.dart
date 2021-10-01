@@ -1,8 +1,8 @@
+import 'package:dchisel/src/ORM/mysql.dart';
+import 'package:dchisel/src/ORM/postgre.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:postgres/postgres.dart';
 
-var errorData = 0;
-var errorMessage;
 var _host = 'localhost';
 var _port = 5432;
 var _db = '';
@@ -21,30 +21,12 @@ class DChiselDB {
   }
 
   Future<Map<String, dynamic>> getAll(table) async {
-    List<Map<String, dynamic>>? resultMap;
-
-    var _data = <Map<String, dynamic>>[];
-    var val;
-
+    var db;
     if (_database == 'postgre') {
       var connection = PostgreSQLConnection(_host, _port, _db,
           username: _username, password: _password);
       await connection.open();
-
-      await connection
-          .mappedResultsQuery('SELECT * FROM $table')
-          .then((value1) {
-        resultMap = value1;
-      }).onError((error, stackTrace) {
-        errorData = 1;
-        errorMessage = error.toString();
-      });
-
-      if (resultMap != null) {
-        for (final row in resultMap!) {
-          _data.add(row[table] ?? {'': ''});
-        }
-      }
+      db = Postgre().getAll(connection, table);
     } else if (_database == 'mysql') {
       // ignore: unnecessary_new
       var settings = new ConnectionSettings(
@@ -53,221 +35,125 @@ class DChiselDB {
           user: _username,
           password: _password,
           db: _db);
-      var conn = await MySqlConnection.connect(settings);
-      await conn.query('select * from users').then((value1) {
-        val = value1;
-      }).onError((error, stackTrace) {
-        errorData = 1;
-        errorMessage = error.toString();
-      });
+      var connection = await MySqlConnection.connect(settings);
+      db = await MySql().getAll(connection, table);
+    } else {}
 
-      if (val != null) {
-        val.forEach((element) {
-          _data.add(element.fields);
-        });
-      }
-    }
-
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return db;
   }
 
   Future<Map<String, dynamic>> getOption(table,
       {column = '*', List? where}) async {
-    List<Map<String, dynamic>>? resultMap;
+    var db;
 
-    var _data = <Map<String, dynamic>>[];
+    if (_database == 'postgre') {
+      var connection = PostgreSQLConnection(_host, _port, _db,
+          username: _username, password: _password);
+      await connection.open();
+      db = await Postgre()
+          .getOption(connection, table, column: column, where: where);
+    } else if (_database == 'mysql') {
+      // ignore: unnecessary_new
+      var settings = new ConnectionSettings(
+          host: _host,
+          port: _port,
+          user: _username,
+          password: _password,
+          db: _db);
+      var connection = await MySqlConnection.connect(settings);
+    } else {}
 
-    var connection = PostgreSQLConnection(_host, _port, _db,
-        username: _username, password: _password);
-    await connection.open();
-
-    where != null
-        ? await connection.mappedResultsQuery(
-            'SELECT $column FROM $table WHERE ${where[0]} LIKE @value',
-            substitutionValues: {'value': where[1]}).then((value1) {
-            resultMap = value1;
-          }).onError((error, stackTrace) {
-            errorData = 1;
-            errorMessage = error.toString();
-          })
-        : await connection
-            .mappedResultsQuery('SELECT $column FROM $table')
-            .then((value1) {
-            resultMap = value1;
-          }).onError((error, stackTrace) {
-            errorData = 1;
-            errorMessage = error.toString();
-          });
-
-    if (resultMap != null) {
-      for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
-      }
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return db;
   }
 
   Future<Map<String, dynamic>> create(table,
       {required Map<String, dynamic>? data}) async {
-    List<Map<String, dynamic>>? resultMap;
+    var db;
 
-    var _data = <Map<String, dynamic>>[];
-    var _dataMap = <String, dynamic>{};
+    if (_database == 'postgre') {
+      var connection = PostgreSQLConnection(_host, _port, _db,
+          username: _username, password: _password);
+      await connection.open();
+      db = await Postgre().create(connection, table, data: data);
+    } else if (_database == 'mysql') {
+      // ignore: unnecessary_new
+      var settings = new ConnectionSettings(
+          host: _host,
+          port: _port,
+          user: _username,
+          password: _password,
+          db: _db);
+      var connection = await MySqlConnection.connect(settings);
+    } else {}
 
-    data!.forEach((key, value) {
-      var _key = key;
-      _key = key.replaceAll(key, '@$key');
-      _dataMap[_key] = value;
-    });
-
-    var connection = PostgreSQLConnection(_host, _port, _db,
-        username: _username, password: _password);
-
-    await connection.open();
-
-    await connection
-        .mappedResultsQuery(
-            'INSERT INTO $table ${data.keys} VALUES ${_dataMap.keys}',
-            substitutionValues: data)
-        .then((value1) {
-      resultMap = value1;
-    }).onError((error, stackTrace) {
-      errorData = 1;
-      errorMessage = error.toString();
-    });
-
-    if (resultMap != null) {
-      for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
-      }
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return db;
   }
 
   Future<Map<String, dynamic>> deleteAll(table) async {
-    List<Map<String, dynamic>>? resultMap;
+    var db;
 
-    var _data = <Map<String, dynamic>>[];
+    if (_database == 'postgre') {
+      var connection = PostgreSQLConnection(_host, _port, _db,
+          username: _username, password: _password);
+      await connection.open();
+      db = await Postgre().deleteAll(connection, table);
+    } else if (_database == 'mysql') {
+      // ignore: unnecessary_new
+      var settings = new ConnectionSettings(
+          host: _host,
+          port: _port,
+          user: _username,
+          password: _password,
+          db: _db);
+      var connection = await MySqlConnection.connect(settings);
+    } else {}
 
-    var connection = PostgreSQLConnection(_host, _port, _db,
-        username: _username, password: _password);
-    await connection.open();
-
-    await connection.mappedResultsQuery('DELETE FROM $table').then((value1) {
-      resultMap = value1;
-    }).onError((error, stackTrace) {
-      errorData = 1;
-      errorMessage = error.toString();
-    });
-
-    if (resultMap != null) {
-      for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
-      }
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return db;
   }
 
   Future<Map<String, dynamic>> deleteOption(table,
       {required List? where}) async {
-    List<Map<String, dynamic>>? resultMap;
+    var db;
 
-    var _data = <Map<String, dynamic>>[];
+    if (_database == 'postgre') {
+      var connection = PostgreSQLConnection(_host, _port, _db,
+          username: _username, password: _password);
+      await connection.open();
+      db = await Postgre().deleteOption(connection, table, where: where);
+    } else if (_database == 'mysql') {
+      // ignore: unnecessary_new
+      var settings = new ConnectionSettings(
+          host: _host,
+          port: _port,
+          user: _username,
+          password: _password,
+          db: _db);
+      var connection = await MySqlConnection.connect(settings);
+    } else {}
 
-    var connection = PostgreSQLConnection(_host, _port, _db,
-        username: _username, password: _password);
-    await connection.open();
-
-    await connection.mappedResultsQuery(
-        'DELETE FROM $table WHERE ${where![0]} = @value',
-        substitutionValues: {'value': where[1]}).then((value1) {
-      resultMap = value1;
-    }).onError((error, stackTrace) {
-      errorData = 1;
-      errorMessage = error.toString();
-    });
-
-    if (resultMap != null) {
-      for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
-      }
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return db;
   }
 
   Future<Map<String, dynamic>> update(table,
       {required Map<String, dynamic>? data, required List? where}) async {
-    List<Map<String, dynamic>>? resultMap;
+    var db;
 
-    var _data = <Map<String, dynamic>>[];
-    var _dataMap = <String, dynamic>{};
+    if (_database == 'postgre') {
+      var connection = PostgreSQLConnection(_host, _port, _db,
+          username: _username, password: _password);
+      await connection.open();
+      db = await Postgre().update(connection, table, data: data, where: where);
+    } else if (_database == 'mysql') {
+      // ignore: unnecessary_new
+      var settings = new ConnectionSettings(
+          host: _host,
+          port: _port,
+          user: _username,
+          password: _password,
+          db: _db);
+      var connection = await MySqlConnection.connect(settings);
+    } else {}
 
-    data!.forEach((key, value) {
-      var _key = key;
-      var _value;
-      if (value.runtimeType == String) {
-        _value = '\'$value\'';
-      } else {
-        _value = value;
-      }
-      _key = key.replaceAll(key, '$key=$_value');
-      _dataMap[_key] = value;
-    });
-
-    var setData = _dataMap.keys
-        .toString()
-        .replaceFirst('(', '')
-        .substring(0, _dataMap.keys.toString().length - 2);
-
-    var connection = PostgreSQLConnection(_host, _port, _db,
-        username: _username, password: _password);
-
-    await connection.open();
-
-    await connection.mappedResultsQuery(
-        'UPDATE $table SET $setData WHERE ${where![0]} = @value',
-        substitutionValues: {'value': where[1]}).then((value1) {
-      resultMap = value1;
-    }).onError((error, stackTrace) {
-      errorData = 1;
-      errorMessage = error.toString();
-    });
-
-    if (resultMap != null) {
-      for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
-      }
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return db;
   }
 }

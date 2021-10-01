@@ -9,6 +9,13 @@ class Routes {
         username: 'postgres',
         password: '14091996Aa`'); // DB CONFIGURATION
 
+    /*DChiselDB().configDB('mysql',
+        host: 'localhost',
+        db: 'dart_coba',
+        port: 3306,
+        username: 'root',
+        password: '14091996Aa`');*/
+
     DChisel().routeGet('/', (Request request) {
       return DChiselDB().getAll('users');
     }); // GET ALL DATA USERS FROM DB
@@ -19,7 +26,7 @@ class Routes {
 
     DChisel().routeGet('/users/<name>', (Request request, String name) {
       return DChiselDB()
-          .getOption('users', column: 'email', where: ['name', '%$name%']);
+          .getOption('users', column: 'email', where: ['name', '$name']);
     }); // GET ONE DATA USERS FROM DB EITH FILTER BY NAME
 
     DChisel().routePost('/users/add', (Request request) async {
