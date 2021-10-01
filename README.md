@@ -1,4 +1,4 @@
-[![Dchisel Logo](https://ibb.co/Jq0HkYK)]
+[![Dchisel Logo](https://i.ibb.co/vhgkzNH/DChisel-1.png)]
 
 # DChisel Dart Framework  
 DChisel is simple Dart Framework for creating REST API
