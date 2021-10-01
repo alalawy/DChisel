@@ -1,7 +1,15 @@
-void main(List<String> args) {
-  void coba() {
-    print('coba');
-  }
+import 'package:process_run/shell.dart';
 
-  print('DChisel Dart REST API Framework');
+import 'arguments/create.dart';
+
+void main(List<String> args) {
+  if (args.length > 0) {
+    if (args[0] == 'create') {
+      if (args.length > 1) {
+        create(project: args[1]);
+      } else {
+        create(project: 'dchisel-app');
+      }
+    }
+  }
 }

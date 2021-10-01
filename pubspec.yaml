@@ -4,7 +4,7 @@ version: 1.0.2+1
 repository: https://github.com/alalawy/DChisel
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
   path: ^1.8.0
@@ -13,6 +13,7 @@ dependencies:
   postgres: ^2.4.1+2
   shelf_plus: ^0.0.2
   mysql1: ^0.19.2
+  process_run: ^0.12.2+1
 
 executables:
   dchisel: dchisel
