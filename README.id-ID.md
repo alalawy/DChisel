@@ -14,8 +14,9 @@ Dchisel adalah dart framework simpel untuk membuat REST API
 untuk menambahkan Dchisel pada aplikasi dart silahkan baca instruksi instalasi di sini : [instruksi instalasi](https://pub.dev/packages/dchisel/install)
 
 #### Host Server
-Default host is "localhost" and port 8000
+
 "localhost" dan port "8000" adalah host dan port bawaan dari Dchisel
+
 ```dart
 import 'package:dchisel/dchisel.dart';
 
