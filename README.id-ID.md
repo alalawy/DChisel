@@ -1,7 +1,11 @@
+[![Dchisel Logo](https://ibb.co/Jq0HkYK)]
+
 # DChisel Dart Framework  
 Dchisel adalah dart framework simpel untuk membuat REST API
 
 [![pub package](https://img.shields.io/pub/v/dchisel.svg)](https://pub.dev/packages/dchisel) 
+
+[![English Documentation](https://img.shields.io/badge/LANGUAGE-ENGLISH-blue)](https://github.com/alalawy/DChisel/blob/master/README.md) [![Indonesia Documentation](https://img.shields.io/badge/LANGUAGE-INDONESIA-blue)](https://github.com/alalawy/DChisel/blob/master/README.id-ID.md)
 
 ## Fitur-Fitur
 
