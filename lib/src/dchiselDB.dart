@@ -28,14 +28,14 @@ class DChiselDB {
       await connection.open();
       db = Postgre().getAll(connection, table);
     } else if (_database == 'mysql') {
-      // ignore: unnecessary_new
-      var settings = new ConnectionSettings(
+      var settings = ConnectionSettings(
           host: _host,
           port: _port,
           user: _username,
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
+      await Future.delayed(Duration(microseconds: 1));
       db = await MySql().getAll(connection, table);
     } else {}
 
@@ -61,6 +61,9 @@ class DChiselDB {
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
+      await Future.delayed(Duration(microseconds: 1));
+      db = await MySql()
+          .getOption(connection, table, column: column, where: where!);
     } else {}
 
     return db;
