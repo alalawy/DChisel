@@ -12,6 +12,7 @@ DChisel is simple Dart Framework for creating REST API
 * Custom host server and port
 * GET, POST, PUT, DELETE, PATCH Routes
 * ORM CRUD to PostgreSQL
+* ORM CRUD to MySQL
 
 ## Usage
 
@@ -78,11 +79,11 @@ DChisel().routeDelete('/hello/<name>', (Request request, String name) async {
 ```
 
 ## Dchisel ORM
-For now, DChisel only support PostgreSQL
+For now, DChisel only support PostgreSQL and MySQL
 
 #### DB Config
 ```dart
-DChiselDB().configDB(
+DChiselDB().configDB('dialect', // DIALECT DATABASE, IF YOU USE POSTGRESQL CHANGE 'dialect' to 'postgre', IF YOU USE MYSQL CHANGE 'dialect' to 'mysql'
     host: 'your_host',
     db: 'your_db_name',
     port: your_port, //integer

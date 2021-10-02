@@ -1,6 +1,6 @@
 name: dchisel
 description: A simple dart web framework for create REST API
-version: 1.0.2+2
+version: 1.0.2+3
 repository: https://github.com/alalawy/DChisel
 
 environment:
