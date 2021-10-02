@@ -35,7 +35,7 @@ class DChiselDB {
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 1));
+      await Future.delayed(Duration(microseconds: 200));
       db = await MySql().getAll(connection, table);
     } else {}
 
@@ -61,7 +61,7 @@ class DChiselDB {
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 1));
+      await Future.delayed(Duration(microseconds: 200));
       db = await MySql()
           .getOption(connection, table, column: column, where: where!);
     } else {}
@@ -87,6 +87,8 @@ class DChiselDB {
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
+      await Future.delayed(Duration(microseconds: 200));
+      db = await MySql().create(connection, table, data: data);
     } else {}
 
     return db;
@@ -109,6 +111,8 @@ class DChiselDB {
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
+      await Future.delayed(Duration(microseconds: 200));
+      db = await MySql().deleteAll(connection, table);
     } else {}
 
     return db;
@@ -132,6 +136,8 @@ class DChiselDB {
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
+      await Future.delayed(Duration(microseconds: 200));
+      db = await MySql().deleteOption(connection, table, where: where);
     } else {}
 
     return db;
@@ -155,6 +161,8 @@ class DChiselDB {
           password: _password,
           db: _db);
       var connection = await MySqlConnection.connect(settings);
+      await Future.delayed(Duration(microseconds: 200));
+      db = await MySql().update(connection, table, data: data, where: where);
     } else {}
 
     return db;
