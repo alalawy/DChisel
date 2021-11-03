@@ -1,3 +1,4 @@
+import 'package:dchisel/src/ORM/utils.dart';
 import 'package:postgres/postgres.dart';
 
 class Postgre {
@@ -18,7 +19,7 @@ class Postgre {
 
     if (resultMap != null) {
       for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
+        _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
     var _base = {
@@ -34,6 +35,7 @@ class Postgre {
       {column, where}) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
+    print('SELECT $column FROM $table WHERE ${where[0]} LIKE ${where[1]}');
     where != null
         ? await connection.mappedResultsQuery(
             'SELECT $column FROM $table WHERE ${where[0]} LIKE @value',
@@ -54,7 +56,7 @@ class Postgre {
 
     if (resultMap != null) {
       for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
+        _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
     var _base = {
@@ -90,7 +92,7 @@ class Postgre {
 
     if (resultMap != null) {
       for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
+        _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
     var _base = {
@@ -115,7 +117,7 @@ class Postgre {
 
     if (resultMap != null) {
       for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
+        _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
     var _base = {
@@ -143,7 +145,7 @@ class Postgre {
 
     if (resultMap != null) {
       for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
+        _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
     var _base = {
@@ -188,7 +190,7 @@ class Postgre {
 
     if (resultMap != null) {
       for (final row in resultMap!) {
-        _data.add(row[table] ?? {'': ''});
+        _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
     var _base = {

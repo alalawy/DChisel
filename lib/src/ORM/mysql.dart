@@ -1,3 +1,4 @@
+import 'package:dchisel/src/ORM/utils.dart';
 import 'package:mysql1/mysql1.dart';
 
 class MySql {
@@ -17,7 +18,7 @@ class MySql {
 
     if (val.isNotEmpty) {
       val.forEach((element) {
-        _data.add(element.fields);
+        _data.add(encodeMap(element.field));
       });
     }
     var _base = {
@@ -46,7 +47,7 @@ class MySql {
 
     if (val.isNotEmpty) {
       val.forEach((element) {
-        _data.add(element.fields);
+        _data.add(encodeMap(element.field));
       });
     }
     var _base = {
@@ -84,7 +85,7 @@ class MySql {
 
     if (val.isNotEmpty) {
       val.forEach((element) {
-        _data.add(element.fields);
+        _data.add(encodeMap(element.field));
       });
     }
     var _base = {
@@ -110,7 +111,7 @@ class MySql {
 
     if (val.isNotEmpty) {
       val.forEach((element) {
-        _data.add(element.fields);
+        _data.add(encodeMap(element.field));
       });
     }
 
@@ -140,7 +141,7 @@ class MySql {
 
     if (val.isNotEmpty) {
       val.forEach((element) {
-        _data.add(element.fields);
+        _data.add(encodeMap(element.field));
       });
     }
 
@@ -192,7 +193,7 @@ class MySql {
 
     if (val.isNotEmpty) {
       val.forEach((element) {
-        _data.add(element.fields);
+        _data.add(encodeMap(element.field));
       });
     }
 

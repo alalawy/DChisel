@@ -2,19 +2,19 @@ import 'package:dchisel/dchisel.dart';
 
 class Routes {
   Future<void> routes() async {
-    /*DChiselDB().configDB('postgre',
+    DChiselDB().configDB('postgre',
         host: 'localhost',
         db: 'dart_test',
         port: 5432,
         username: 'postgres',
-        password: '14091996Aa`');*/ // DB CONFIGURATION
+        password: '14091996Aa`'); // DB CONFIGURATION
 
-    DChiselDB().configDB('mysql',
+    /*DChiselDB().configDB('mysql',
         host: '127.0.0.1',
         db: 'dart_coba',
         port: 3306,
         username: 'root',
-        password: '14091996Aa`');
+        password: '14091996Aa`');*/
 
     DChisel().routeGet('/', (Request request) {
       return DChiselDB().getAll('users');
@@ -24,9 +24,11 @@ class Routes {
       return DChiselDB().getAll('users');
     }); // GET ALL DATA USERS FROM DB
 
-    DChisel().routeGet('/users/<name>', (Request request, String name) {
-      return DChiselDB()
+    DChisel().routeGet('/users/<name>', (Request request, String name) async {
+      var user = await DChiselDB()
           .getOption('users', column: 'email', where: ['name', '$name']);
+      print(user);
+      return user;
     }); // GET ONE DATA USERS FROM DB EITH FILTER BY NAME
 
     DChisel().routePost('/users/add', (Request request) async {
