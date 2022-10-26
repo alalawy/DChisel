@@ -26,20 +26,27 @@ untuk menambahkan Dchisel pada aplikasi dart silahkan baca instruksi instalasi d
 import 'package:dchisel/dchisel.dart';
 
 Future<void> main(List<String> arguments) async {
-  DChisel().serve();
+  DRoute route() {
+    var droute = DRoute();
+    droute.get('/', (Request req) async => resOk("Hello, DChisel"));
+    return droute;
+  }
+  DChisel().serve(getroutes: route());
 }
 ```
 
 jika ingin merubah host menjadi 0.0.0.0 dengan port 5555 kamu bisa gunakan:
 
 ```dart
- DChisel().serve(serverHost: '0.0.0.0', serverPort: 5555);
+ droute.get('/hello', (Request request) {
+    return 'Hello, World';
 ```
 
 #### GET Route
 ```dart
-DChisel().routeGet('/hello', (Request request) {
-    return 'Hello, World';
+droute.get('/getparam/<name>', (Request request, String name) {
+    return 'Hello, $name';
+});
 });
 ```
 jika ingin menambahkan parameter pada Get route kamu bisa gunakan:
@@ -52,7 +59,7 @@ DChisel().routeGet('/getparam/<name>', (Request request, String name) {
 
 #### POST Route
 ```dart
-DChisel().routePost('/hello', (Request request) async {
+droute.post('/hello', (Request request) async {
     return 'Hello, World';
 });
 ```
@@ -66,7 +73,7 @@ var headers = await request.headers;
 ```
 #### PUT Route
 ```dart
-DChisel().routePut('/hello/<name>', (Request request, String name) async {
+droute.put('/hello/<name>', (Request request, String name) async {
   return 'Hello, $name';
 });
 ```
@@ -77,7 +84,7 @@ var body = await request.body.asJson;
 ```
 #### DELETE Route 
 ```dart
-DChisel().routeDelete('/hello/<name>', (Request request, String name) async {
+droute.delete('/hello/<name>', (Request request, String name) async {
   return 'Hello, $name';
 });
 ```
