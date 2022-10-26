@@ -1,6 +1,6 @@
 name: dchisel
 description: A simple dart web framework for create REST API. DChisel support Custom Middleware and Mysql & PostgreSQL ORM.
-version: 1.1.0+4
+version: 1.1.0+5
 repository: https://github.com/alalawy/DChisel
 
 environment:
