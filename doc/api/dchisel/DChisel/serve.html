@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the serve method from the DChisel class, for the Dart programming language.">
+  <title>serve method - DChisel class - dchisel library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">dchisel</a></li>
+    <li><a href="../../dchisel/dchisel-library.html">dchisel</a></li>
+    <li><a href="../../dchisel/DChisel-class.html">DChisel</a></li>
+    <li class="self-crumb">serve method</li>
+  </ol>
+  <div class="self-name">serve</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">serve</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-io/HttpServer-class.html">HttpServer</a></span>&gt;</span></span>
+<span class="name ">serve</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="serve-param-serverHost">{<span class="type-annotation">dynamic</span> <span class="parameter-name">serverHost</span>, </span></li>
+<li><span class="parameter" id="serve-param-serverPort"><span class="type-annotation">dynamic</span> <span class="parameter-name">serverPort</span>, </span></li>
+<li><span class="parameter" id="serve-param-getroutes"><span class="type-annotation"><a href="../../dchisel/DRoute-class.html">DRoute</a>?</span> <span class="parameter-name">getroutes</span>}</span></li>
+</ol>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;HttpServer&gt; serve({serverHost, serverPort, DRoute? getroutes}) async {
+  var routes = Router().plus;
+  var routes2 = Router().plus;
+
+  List middleware = getroutes!.allMiddleware();
+  List route = getroutes.all();
+  List handler = getroutes.allHandler();
+  List routeMiddleware = getroutes.allRouteMiddleware();
+
+  RouterPlus routerData() {
+    routes.use(corsHeaders());
+    for (var i = 0; i &lt; middleware.length; i++) {
+      routes.use(middleware[i]);
+    }
+
+    for (var i = 0; i &lt; route[0].length; i++) {
+      routes.get(route[0][i], handler[0][i], use: routeMiddleware[0][i]);
+    }
+    for (var i = 0; i &lt; route[1].length; i++) {
+      routes.post(route[1][i], handler[1][i], use: routeMiddleware[0][i]);
+    }
+    for (var i = 0; i &lt; route[2].length; i++) {
+      routes.put(route[2][i], handler[2][i], use: routeMiddleware[0][i]);
+    }
+    for (var i = 0; i &lt; route[3].length; i++) {
+      routes.delete(route[3][i], handler[3][i], use: routeMiddleware[0][i]);
+    }
+    for (var i = 0; i &lt; route[4].length; i++) {
+      routes.patch(route[4][i], handler[4][i], use: routeMiddleware[0][i]);
+    }
+    for (var i = 0; i &lt; route[4].length; i++) {
+      routes.patch(route[4][i], handler[4][i], use: routeMiddleware[0][i]);
+    }
+
+    return routes;
+  }
+
+  Future&lt;HttpServer&gt; createServer() async {
+    var server = await io.serve(
+        routerData(), serverHost ?? &#39;localhost&#39;, serverPort ?? 8000);
+
+    print(&#39;Serving at http:&#47;&#47;${server.address.host}:${server.port}&#39;);
+    return server;
+  }
+
+  return createServer();
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">dchisel</a></li>
+  <li><a href="../../dchisel/dchisel-library.html">dchisel</a></li>
+  <li><a href="../../dchisel/DChisel-class.html">DChisel</a></li>
+  <li class="self-crumb">serve method</li>
+</ol>
+
+
+    <h5>DChisel class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../dchisel/DChisel-class.html#constructors">Constructors</a></li>
+          <li><a href="../../dchisel/DChisel/DChisel.html">DChisel</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../dchisel/DChisel-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../dchisel/DChisel-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../dchisel/DChisel/serve.html">serve</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../dchisel/DChisel-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    dchisel
+      1.1.0+4
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

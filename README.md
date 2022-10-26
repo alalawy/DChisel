@@ -13,6 +13,13 @@ DChisel is simple Dart Framework for creating REST API
 * GET, POST, PUT, DELETE, PATCH Routes
 * ORM CRUD to PostgreSQL
 * ORM CRUD to MySQL
+* Global Middleware
+* Specific Route Middleware
+* Auth
+* Base Response Ok & Forbidden
+* Header CORS
+* Base64 decode to File
+* Hotreload
 
 ## Usage
 

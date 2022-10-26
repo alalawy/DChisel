@@ -2,7 +2,7 @@
 
 - Initial version.
 
-## 1.1.0
+## 1.1.0+4
 
 ### Stable version
 
@@ -16,3 +16,4 @@
 * Base Response Ok & Forbidden
 * Header CORS
 * Base64 decode to File
+* HotReload

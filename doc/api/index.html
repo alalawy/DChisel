@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 6.0.0">
+  <meta name="description" content="dchisel API docs, for the Dart programming language.">
+  <title>dchisel - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">dchisel package</li>
+  </ol>
+  <div class="self-name">dchisel</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <p><img src="https://i.ibb.co/vhgkzNH/DChisel-1.png" alt="Dchisel Logo"></p>
+<h1 id="dchisel-dart-framework">DChisel Dart Framework</h1>
+<p>DChisel is simple Dart Framework for creating REST API</p>
+<p><a href="https://pub.dev/packages/dchisel"><img src="https://img.shields.io/pub/v/dchisel.svg" alt="pub package"></a></p>
+<p><a href="https://github.com/alalawy/DChisel/blob/master/README.md"><img src="https://img.shields.io/badge/LANGUAGE-ENGLISH-blue" alt="English Documentation"></a> <a href="https://github.com/alalawy/DChisel/blob/master/README.id-ID.md"><img src="https://img.shields.io/badge/LANGUAGE-INDONESIA-blue" alt="Indonesia Documentation"></a></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Custom host server and port</li>
+<li>GET, POST, PUT, DELETE, PATCH Routes</li>
+<li>ORM CRUD to PostgreSQL</li>
+<li>ORM CRUD to MySQL</li>
+<li>Global Middleware</li>
+<li>Specific Route Middleware</li>
+<li>Auth</li>
+<li>Base Response Ok &amp; Forbidden</li>
+<li>Header CORS</li>
+<li>Base64 decode to File</li>
+<li>Hotreload</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>To add the dchisel to your Dart application read the <a href="https://pub.dev/packages/dchisel/install">install</a> instructions.</p>
+<h4 id="host-server">Host Server</h4>
+<p>Default host is "localhost" and port 8000</p>
+<pre class="language-dart"><code class="language-dart">import 'package:dchisel/dchisel.dart';
+
+Future&lt;void&gt; main(List&lt;String&gt; arguments) async {
+  DRoute route() {
+    var droute = DRoute();
+    droute.get('/', (Request req) async =&gt; resOk("Hello, DChisel"));
+    return droute;
+  }
+  DChisel().serve(getroutes: route());
+}
+</code></pre>
+<p>If you want to change the host to 0.0.0.0 and port to 5555 you can use :</p>
+<pre class="language-dart"><code class="language-dart"> DChisel().serve(getroutes: route(), serverHost: '0.0.0.0', serverPort: 5555);
+</code></pre>
+<h4 id="get-route">GET Route</h4>
+<pre class="language-dart"><code class="language-dart">droute.get('/hello', (Request request) {
+    return 'Hello, World';
+});
+</code></pre>
+<p>GET with param you can use :</p>
+<pre class="language-dart"><code class="language-dart">droute.get('/getparam/&lt;name&gt;', (Request request, String name) {
+    return 'Hello, $name';
+});
+</code></pre>
+<h4 id="post-route">POST Route</h4>
+<pre class="language-dart"><code class="language-dart">droute.post('/hello', (Request request) async {
+    return 'Hello, World';
+});
+</code></pre>
+<p>If you want to get Body value from your POST request, use :</p>
+<pre class="language-dart"><code class="language-dart">var body = await request.body.asJson;
+</code></pre>
+<p>If you want to get Header value from your POST request, use :</p>
+<pre class="language-dart"><code class="language-dart">var headers = await request.headers;
+</code></pre>
+<h4 id="put-route">PUT Route</h4>
+<pre class="language-dart"><code class="language-dart">droute.put('/hello/&lt;name&gt;', (Request request, String name) async {
+  return 'Hello, $name';
+});
+</code></pre>
+<p>PUT also can get Header and Body request</p>
+<pre class="language-dart"><code class="language-dart">var headers = await request.headers;
+var body = await request.body.asJson;
+</code></pre>
+<h4 id="delete-route">DELETE Route</h4>
+<pre class="language-dart"><code class="language-dart">droute.delete('/hello/&lt;name&gt;', (Request request, String name) async {
+  return 'Hello, $name';
+});
+</code></pre>
+<h2 id="dchisel-orm">Dchisel ORM</h2>
+<p>For now, DChisel only support PostgreSQL and MySQL</p>
+<h4 id="db-config">DB Config</h4>
+<pre class="language-dart"><code class="language-dart">DChiselDB().configDB('dialect', // DIALECT DATABASE, IF YOU USE POSTGRESQL CHANGE 'dialect' to 'postgre', IF YOU USE MYSQL CHANGE 'dialect' to 'mysql'
+    host: 'your_host',
+    db: 'your_db_name',
+    port: your_port, //integer
+    username: 'your_db_username',
+    password: 'your_db_password');
+</code></pre>
+<h4 id="get-all-data">Get All Data</h4>
+<pre class="language-dart"><code class="language-dart">DChiselDB().getAll('your_table_name');
+</code></pre>
+<h4 id="get-data-with-custom-column-and-filter">Get Data With Custom Column and Filter</h4>
+<pre class="language-dart"><code class="language-dart">DChiselDB().getOption('your_table_name', 
+    column: 'your_column1,your_column2', 
+    where: ['your_column_name', 'your_filter_value']);
+</code></pre>
+<p>If you want filter contains, just add % into your filter value, example :</p>
+<pre class="language-dart"><code class="language-dart">'%your_filter_value%'
+</code></pre>
+<h4 id="create-data">Create Data</h4>
+<pre class="language-dart"><code class="language-dart">DChiselDB().create('users', data: {
+    'your_column_name': 'your_value'
+});
+</code></pre>
+<h4 id="update-data">Update Data</h4>
+<pre class="language-dart"><code class="language-dart">DChiselDB().update('users', data: {
+    'your_column_name': 'your_value'
+}, where: ['your_filter_column_name', 'your_filter_value']);
+</code></pre>
+<h4 id="delete-data">Delete Data</h4>
+<pre class="language-dart"><code class="language-dart">DChiselDB().deleteAll('your_table_name');
+</code></pre>
+<h4 id="delete-data-custom-filter">Delete Data Custom Filter</h4>
+<pre class="language-dart"><code class="language-dart">DChiselDB().deleteOption('your_table_name', where: ['your_filter_column_name', 'your_filter_value']);
+</code></pre>
+<h2 id="issues">Issues</h2>
+<p>Please file any issues, bugs or feature requests as an issue on our <a href="https://github.com/alalawy/DChisel/issues">GitHub</a> page. Commercial support is available, you can contact us at <a href="mailto:alphacsoft@gmail.com">alphacsoft@gmail.com</a>.</p>
+<h2 id="want-to-contribute">Want to contribute</h2>
+<p>If you would like to contribute to the plugin (e.g. by improving the documentation, solving a bug or adding a cool new feature), please carefully review our <a href="../CONTRIBUTING.md">contribution guide</a> and send us your <a href="https://github.com/alalawy/DChisel/pulls">pull request</a>.</p>
+<h2 id="author">Author</h2>
+<p>This dchisel framework for Dart is developed by <a href="https://alphacsoft.com">Alphacsoft</a>.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="dchisel">
+  <span class="name"><a href="dchisel/dchisel-library.html">dchisel</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li class="self-crumb">dchisel package</li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">dchisel</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="dchisel/dchisel-library.html">dchisel</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    dchisel
+      1.1.0+4
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

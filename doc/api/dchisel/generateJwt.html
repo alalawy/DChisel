@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the generateJwt function from the dchisel library, for the Dart programming language.">
+  <title>generateJwt function - dchisel library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">dchisel</a></li>
+    <li><a href="../dchisel/dchisel-library.html">dchisel</a></li>
+    <li class="self-crumb">generateJwt function</li>
+  </ol>
+  <div class="self-name">generateJwt</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-function">generateJwt</span> function 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">generateJwt</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="generateJwt-param-subject"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">subject</span>, </span></li>
+<li><span class="parameter" id="generateJwt-param-issuer"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">issuer</span>, </span></li>
+<li><span class="parameter" id="generateJwt-param-secret"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">secret</span>, </span></li>
+<li><span class="parameter" id="generateJwt-param-salt">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">salt</span>}</span></li>
+</ol>)
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">String generateJwt(String subject, String issuer, String secret,
+    {required String salt}) {
+  final jwt = JWT({&#39;iat&#39;: DateTime.now().millisecondsSinceEpoch, &#39;salt&#39;: salt},
+      subject: subject, issuer: issuer);
+  return jwt.sign(SecretKey(secret));
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">dchisel</a></li>
+  <li><a href="../dchisel/dchisel-library.html">dchisel</a></li>
+  <li class="self-crumb">generateJwt function</li>
+</ol>
+
+
+    <h5>dchisel library</h5>
+    <ol>
+  <li class="section-title"><a href="../dchisel/dchisel-library.html#classes">Classes</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/Audience-class.html">Audience</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/Cascade-class.html">Cascade</a></li>
+  <li><a href="../dchisel/DChisel-class.html">DChisel</a></li>
+  <li><a href="../dchisel/DChiselDB-class.html">DChiselDB</a></li>
+  <li><a href="../dchisel/DRoute-class.html">DRoute</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/ECPrivateKey-class.html">ECPrivateKey</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/ECPublicKey-class.html">ECPublicKey</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/EdDSAPrivateKey-class.html">EdDSAPrivateKey</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/EdDSAPublicKey-class.html">EdDSAPublicKey</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWT-class.html">JWT</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTAlgorithm-class.html">JWTAlgorithm</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTKey-class.html">JWTKey</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/Pipeline-class.html">Pipeline</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/Request-class.html">Request</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/RequestBodyAccessor-class.html">RequestBodyAccessor</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/Response-class.html">Response</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_router/1.1.3/shelf_router/Route-class.html">Route</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_router/1.1.3/shelf_router/Router-class.html">Router</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/RouterPlus-class.html">RouterPlus</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/RSAPrivateKey-class.html">RSAPrivateKey</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/RSAPublicKey-class.html">RSAPublicKey</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/SecretKey-class.html">SecretKey</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/Server-class.html">Server</a></li>
+  <li><a class="deprecated" href="https://pub.dev/documentation/shelf/1.4.0/shelf/ServerHandler-class.html">ServerHandler</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/ShelfRunContext-class.html">ShelfRunContext</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/WebSocketSession-class.html">WebSocketSession</a></li>
+
+  <li class="section-title"><a href="../dchisel/dchisel-library.html#extensions">Extensions</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/MiddlewareExtension.html">MiddlewareExtension</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/MiddlewareExtensions.html">MiddlewareExtensions</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/RequestBodyAccessorExtension.html">RequestBodyAccessorExtension</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/ResponseHandlerToMiddleware.html">ResponseHandlerToMiddleware</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_router/1.1.3/shelf_router/RouterParams.html">RouterParams</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/RouterPlusExtension.html">RouterPlusExtension</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/ShelfRequestExtension.html">ShelfRequestExtension</a></li>
+
+
+
+  <li class="section-title"><a href="../dchisel/dchisel-library.html#properties">Properties</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/addChunkedEncoding.html">addChunkedEncoding</a></li>
+
+  <li class="section-title"><a href="../dchisel/dchisel-library.html#functions">Functions</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/addResponseHandler.html">addResponseHandler</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/cascade.html">cascade</a></li>
+  <li><a href="../dchisel/checkAuth.html">checkAuth</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_static/1.1.1/shelf_static/createFileHandler.html">createFileHandler</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/createMiddleware.html">createMiddleware</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_static/1.1.1/shelf_static/createStaticHandler.html">createStaticHandler</a></li>
+  <li><a href="../dchisel/decodeBase64.html">decodeBase64</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/download.html">download</a></li>
+  <li><a href="../dchisel/encodeMap.html">encodeMap</a></li>
+  <li><a href="../dchisel/generateJwt.html">generateJwt</a></li>
+  <li><a href="../dchisel/generateSalt.html">generateSalt</a></li>
+  <li><a href="../dchisel/getRandString.html">getRandString</a></li>
+  <li><a href="../dchisel/handleAuth.html">handleAuth</a></li>
+  <li><a href="../dchisel/hashPassword.html">hashPassword</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/logRequests.html">logRequests</a></li>
+  <li><a class="deprecated" href="https://pub.dev/documentation/shelf_router/1.1.3/shelf_router/params.html">params</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/parseECPrivateKeyPEM.html">parseECPrivateKeyPEM</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/parseECPublicKeyPEM.html">parseECPublicKeyPEM</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/parseRSAPrivateKeyPEM.html">parseRSAPrivateKeyPEM</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/parseRSAPublicKeyPEM.html">parseRSAPublicKeyPEM</a></li>
+  <li><a href="../dchisel/resForbidden.html">resForbidden</a></li>
+  <li><a href="../dchisel/resOk.html">resOk</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/resolveResponse.html">resolveResponse</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/setContentType.html">setContentType</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/shelfRun.html">shelfRun</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/typeByExtension.html">typeByExtension</a></li>
+  <li><a href="../dchisel/verifyJwt.html">verifyJwt</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_hotreload/1.3.0/shelf_hotreload/withHotreload.html">withHotreload</a></li>
+
+
+  <li class="section-title"><a href="../dchisel/dchisel-library.html#typedefs">Typedefs</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/Handler.html">Handler</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/Middleware.html">Middleware</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/OnStarted.html">OnStarted</a></li>
+  <li><a href="https://pub.dev/documentation/shelf_plus/1.5.0/shelf_plus/ResponseHandler.html">ResponseHandler</a></li>
+
+  <li class="section-title"><a href="../dchisel/dchisel-library.html#exceptions">Exceptions</a></li>
+  <li><a href="https://pub.dev/documentation/shelf/1.4.0/shelf/HijackException-class.html">HijackException</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTError-class.html">JWTError</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTExpiredError-class.html">JWTExpiredError</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTInvalidError-class.html">JWTInvalidError</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTNotActiveError-class.html">JWTNotActiveError</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTParseError-class.html">JWTParseError</a></li>
+  <li><a href="https://pub.dev/documentation/dart_jsonwebtoken/2.4.2/jsonwebtoken/JWTUndefinedError-class.html">JWTUndefinedError</a></li>
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    dchisel
+      1.1.0+4
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
