@@ -24,31 +24,36 @@ Default host is "localhost" and port 8000
 import 'package:dchisel/dchisel.dart';
 
 Future<void> main(List<String> arguments) async {
-  DChisel().serve();
+  DRoute route() {
+    var droute = DRoute();
+    droute.get('/', (Request req) async => resOk("Hello, DChisel"));
+    return droute;
+  }
+  DChisel().serve(getroutes: route());
 }
 ```
 If you want to change the host to 0.0.0.0 and port to 5555 you can use :
 
 ```dart
- DChisel().serve(serverHost: '0.0.0.0', serverPort: 5555);
+ DChisel().serve(getroutes: route(), serverHost: '0.0.0.0', serverPort: 5555);
 ```
 
 #### GET Route
 ```dart
-DChisel().routeGet('/hello', (Request request) {
+droute.get('/hello', (Request request) {
     return 'Hello, World';
 });
 ```
 GET with param you can use :
 ```dart
-DChisel().routeGet('/getparam/<name>', (Request request, String name) {
+droute.get('/getparam/<name>', (Request request, String name) {
     return 'Hello, $name';
 });
 ```
 
 #### POST Route
 ```dart
-DChisel().routePost('/hello', (Request request) async {
+droute.post('/hello', (Request request) async {
     return 'Hello, World';
 });
 ```
@@ -62,7 +67,7 @@ var headers = await request.headers;
 ```
 #### PUT Route
 ```dart
-DChisel().routePut('/hello/<name>', (Request request, String name) async {
+droute.put('/hello/<name>', (Request request, String name) async {
   return 'Hello, $name';
 });
 ```
@@ -73,7 +78,7 @@ var body = await request.body.asJson;
 ```
 #### DELETE Route
 ```dart
-DChisel().routeDelete('/hello/<name>', (Request request, String name) async {
+droute.delete('/hello/<name>', (Request request, String name) async {
   return 'Hello, $name';
 });
 ```
