@@ -1,19 +1,18 @@
-import 'package:dchisel/src/ORM/utils.dart';
+import 'package:dchisel/dchisel.dart';
 import 'package:postgres/postgres.dart';
 
 class Postgre {
-  var errorData = 0;
+  bool errorData = false;
   var errorMessage;
 
-  Future<Map<String, dynamic>> getAll(
-      PostgreSQLConnection connection, table) async {
+  Future<Response> getAll(PostgreSQLConnection connection, table) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
 
     await connection.mappedResultsQuery('SELECT * FROM $table').then((value1) {
       resultMap = value1;
     }).onError((error, stackTrace) {
-      errorData = 1;
+      errorData = true;
       errorMessage = error.toString();
     });
 
@@ -22,16 +21,17 @@ class Postgre {
         _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
 
-    return _base;
+    // var _base = {
+    //   'error': errorData,
+    //   'data': _data,
+    //   'message': errorMessage ?? 'Success'
+    // };
+
+    return errorData ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> getOption(PostgreSQLConnection connection, table,
+  Future<Response> getOption(PostgreSQLConnection connection, table,
       {column, where}) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
@@ -42,7 +42,7 @@ class Postgre {
             substitutionValues: {'value': where[1]}).then((value1) {
             resultMap = value1;
           }).onError((error, stackTrace) {
-            errorData = 1;
+            errorData = true;
             errorMessage = error.toString();
           })
         : await connection
@@ -50,7 +50,7 @@ class Postgre {
             .then((value1) {
             resultMap = value1;
           }).onError((error, stackTrace) {
-            errorData = 1;
+            errorData = true;
             errorMessage = error.toString();
           });
 
@@ -59,15 +59,10 @@ class Postgre {
         _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> create(PostgreSQLConnection connection, table,
+  Future<Response> create(PostgreSQLConnection connection, table,
       {required Map<String, dynamic>? data}) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
@@ -86,7 +81,7 @@ class Postgre {
         .then((value1) {
       resultMap = value1;
     }).onError((error, stackTrace) {
-      errorData = 1;
+      errorData = true;
       errorMessage = error.toString();
     });
 
@@ -95,23 +90,17 @@ class Postgre {
         _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> deleteAll(
-      PostgreSQLConnection connection, table) async {
+  Future<Response> deleteAll(PostgreSQLConnection connection, table) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
 
     await connection.mappedResultsQuery('DELETE FROM $table').then((value1) {
       resultMap = value1;
     }).onError((error, stackTrace) {
-      errorData = 1;
+      errorData = true;
       errorMessage = error.toString();
     });
 
@@ -120,16 +109,10 @@ class Postgre {
         _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> deleteOption(
-      PostgreSQLConnection connection, table,
+  Future<Response> deleteOption(PostgreSQLConnection connection, table,
       {required List? where}) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
@@ -139,7 +122,7 @@ class Postgre {
         substitutionValues: {'value': where[1]}).then((value1) {
       resultMap = value1;
     }).onError((error, stackTrace) {
-      errorData = 1;
+      errorData = true;
       errorMessage = error.toString();
     });
 
@@ -148,15 +131,10 @@ class Postgre {
         _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> update(PostgreSQLConnection connection, table,
+  Future<Response> update(PostgreSQLConnection connection, table,
       {required Map<String, dynamic>? data, required List? where}) async {
     List<Map<String, dynamic>>? resultMap;
     var _data = <Map<String, dynamic>>[];
@@ -184,7 +162,7 @@ class Postgre {
         substitutionValues: {'value': where[1]}).then((value1) {
       resultMap = value1;
     }).onError((error, stackTrace) {
-      errorData = 1;
+      errorData = true;
       errorMessage = error.toString();
     });
 
@@ -193,11 +171,6 @@ class Postgre {
         _data.add(encodeMap(row[table] ?? {'': ''}));
       }
     }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData ? resForbidden(errorMessage) : resOk(_data);
   }
 }

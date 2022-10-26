@@ -1,162 +1,123 @@
-import 'package:dchisel/src/ORM/utils.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:dchisel/dchisel.dart';
+import 'package:mysql_client/mysql_client.dart';
 
 class MySql {
-  Future<Map<String, dynamic>> getAll(
-      MySqlConnection? connection, table) async {
-    var errorData = 0;
-    var errorMessage;
+  bool? errorData = false;
+  var errorMessage;
+  Future<Response> getAll(MySQLConnection? connection, table) async {
     var val;
     var _data = <Map<String, dynamic>>[];
 
-    await connection!.query('select * from $table');
-    var dataQuery = connection.query('select * from $table');
+    var dataQuery = connection?.execute('select * from $table');
 
-    await dataQuery.then((value) {
-      val = value;
-    }).onError((error, stackTrace) => null);
+    await dataQuery!.then((value) {
+      for (final row in value.rows) {
+        _data.add(encodeMap(row.assoc()));
+      }
+    }).onError((error, stackTrace) {
+      errorData = true;
+      errorMessage = error.toString();
+    });
 
-    if (val.isNotEmpty) {
-      val.forEach((element) {
-        _data.add(encodeMap(element.field));
-      });
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData! ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> getOption(MySqlConnection? connection, table,
+  Future<Response> getOption(MySQLConnection? connection, table,
       {required String column, required List where}) async {
-    var errorData = 0;
-    var errorMessage;
     var val;
     var _data = <Map<String, dynamic>>[];
 
-    await connection!.query(
-        'select $column from $table where ${where[0]} like ?', [where[1]]);
-    var dataQuery = connection.query(
-        'select $column from $table where ${where[0]} like ?', [where[1]]);
+    var dataQuery = connection?.execute(
+        'select $column from $table where ${where[0]} like :${where[0]}',
+        {'${where[0]}': '${where[1]}'});
 
-    await dataQuery.then((value) {
-      val = value;
-    }).onError((error, stackTrace) => null);
+    await dataQuery!.then((value) {
+      for (final row in value.rows) {
+        _data.add(encodeMap(row.assoc()));
+      }
+    }).onError((error, stackTrace) {
+      errorData = true;
+      errorMessage = error.toString();
+    });
 
-    if (val.isNotEmpty) {
-      val.forEach((element) {
-        _data.add(encodeMap(element.field));
-      });
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData! ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> create(MySqlConnection connection, table,
+  Future<Response> create(MySQLConnection? connection, table,
       {required Map<String, dynamic>? data}) async {
-    var errorData = 0;
-    var errorMessage;
     var val;
     var _data = <Map<String, dynamic>>[];
     List? values = [];
 
-    data!.values.toList().forEach((element) {
+    data!.keys.toList().forEach((element) {
       values.add('?');
     });
 
     var whereValues = values
         .toString()
-        .replaceFirst('[', '(')
-        .substring(0, values.toString().length - 1);
+        .replaceFirst('[', '')
+        .substring(0, values.toString().length - 2);
 
-    var dataQuery = connection.query(
-        'insert into $table ${data.keys} values $whereValues)',
-        data.values.toList());
+    // print(whereValues);
+    // print(
+    //     'insert into $table ${data.keys} values $whereValues, ${data.values.toList()}');
+    var stmt = await connection?.prepare(
+      'insert into $table ${data.keys} values ($whereValues)',
+    );
+    var dataQuery = stmt!.execute(data.values.toList());
 
     await dataQuery.then((value) {
-      val = value;
-    }).onError((error, stackTrace) => null);
-
-    if (val.isNotEmpty) {
-      val.forEach((element) {
-        _data.add(encodeMap(element.field));
-      });
-    }
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+      for (final row in value.rows) {
+        _data.add(encodeMap(row.assoc()));
+      }
+    }).onError((error, stackTrace) {
+      errorData = true;
+      errorMessage = error.toString();
+    });
+    return errorData! ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> deleteAll(
-      MySqlConnection connection, table) async {
-    var errorData = 0;
-    var errorMessage;
+  Future<Response> deleteAll(MySQLConnection? connection, table) async {
     var val;
     var _data = <Map<String, dynamic>>[];
 
-    var dataQuery = connection.query('delete from $table');
+    var dataQuery = connection?.execute('delete from $table');
 
-    await dataQuery.then((value) {
-      val = value;
-    }).onError((error, stackTrace) => null);
+    await dataQuery!.then((value) {
+      for (final row in value.rows) {
+        _data.add(encodeMap(row.assoc()));
+      }
+    }).onError((error, stackTrace) {
+      errorData = true;
+      errorMessage = error.toString();
+    });
 
-    if (val.isNotEmpty) {
-      val.forEach((element) {
-        _data.add(encodeMap(element.field));
-      });
-    }
-
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData! ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> deleteOption(MySqlConnection connection, table,
+  Future<Response> deleteOption(MySQLConnection? connection, table,
       {required List? where}) async {
-    var errorData = 0;
-    var errorMessage;
     var val;
     var _data = <Map<String, dynamic>>[];
 
-    await connection
-        .query('delete from $table where ${where![0]} = ?', [where[1]]);
-    var dataQuery = connection
-        .query('delete from $table where ${where[0]} = ?', [where[1]]);
+    var dataQuery = connection?.execute(
+        'delete from $table where ${where![0]} = :${where[0]}',
+        {where[0]: where[1]});
 
-    await dataQuery.then((value) {
-      val = value;
-    }).onError((error, stackTrace) => null);
+    await dataQuery!.then((value) {
+      for (final row in value.rows) {
+        _data.add(encodeMap(row.assoc()));
+      }
+    }).onError((error, stackTrace) {
+      errorData = true;
+      errorMessage = error.toString();
+    });
 
-    if (val.isNotEmpty) {
-      val.forEach((element) {
-        _data.add(encodeMap(element.field));
-      });
-    }
-
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData! ? resForbidden(errorMessage) : resOk(_data);
   }
 
-  Future<Map<String, dynamic>> update(MySqlConnection connection, table,
+  Future<Response> update(MySQLConnection? connection, table,
       {required Map<String, dynamic>? data, required List? where}) async {
-    var errorData = 0;
-    var errorMessage;
     var val;
     var _data = <Map<String, dynamic>>[];
     var _dataMap = <String, dynamic>{};
@@ -181,27 +142,22 @@ class MySql {
         .substring(0, _dataMap.keys.toString().length - 2);
 
     whereValues.add(where![1]);
-
-    await connection.query(
-        'update $table set $setData where ${where[0]} = ?', whereValues);
-    var dataQuery = connection.query(
-        'update $table set $setData where ${where[0]} = ?', whereValues);
+    // print('update $table set $setData where ${where[0]} = ?');
+    // print(whereValues);
+    var stmt = await connection?.prepare(
+      'update $table set $setData where ${where[0]} = ?',
+    );
+    var dataQuery = stmt!.execute(whereValues);
 
     await dataQuery.then((value) {
-      val = value;
-    }).onError((error, stackTrace) => null);
+      for (final row in value.rows) {
+        _data.add(encodeMap(row.assoc()));
+      }
+    }).onError((error, stackTrace) {
+      errorData = true;
+      errorMessage = error.toString();
+    });
 
-    if (val.isNotEmpty) {
-      val.forEach((element) {
-        _data.add(encodeMap(element.field));
-      });
-    }
-
-    var _base = {
-      'error': errorData,
-      'data': _data,
-      'message': errorMessage ?? 'Success'
-    };
-    return _base;
+    return errorData! ? resForbidden(errorMessage) : resOk(_data);
   }
 }

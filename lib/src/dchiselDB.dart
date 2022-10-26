@@ -1,6 +1,7 @@
+import 'package:dchisel/dchisel.dart';
 import 'package:dchisel/src/ORM/mysql.dart';
 import 'package:dchisel/src/ORM/postgre.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:postgres/postgres.dart';
 
 var _host = 'localhost';
@@ -20,7 +21,7 @@ class DChiselDB {
     _password = password;
   }
 
-  Future<Map<String, dynamic>> getAll(table) async {
+  Future<Response> getAll(table) async {
     var db;
     if (_database == 'postgre') {
       var connection = PostgreSQLConnection(_host, _port, _db,
@@ -28,22 +29,22 @@ class DChiselDB {
       await connection.open();
       db = Postgre().getAll(connection, table);
     } else if (_database == 'mysql') {
-      var settings = ConnectionSettings(
-          host: _host,
-          port: _port,
-          user: _username,
-          password: _password,
-          db: _db);
-      var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 200));
+      final connection = await MySQLConnection.createConnection(
+        host: _host,
+        port: _port,
+        userName: _username,
+        password: _password,
+        databaseName: _db, // optional
+      );
+
+      await connection.connect();
       db = await MySql().getAll(connection, table);
     } else {}
 
     return db;
   }
 
-  Future<Map<String, dynamic>> getOption(table,
-      {column = '*', List? where}) async {
+  Future<Response> getOption(table, {column = '*', List? where}) async {
     var db;
 
     if (_database == 'postgre') {
@@ -53,15 +54,15 @@ class DChiselDB {
       db = await Postgre()
           .getOption(connection, table, column: column, where: where);
     } else if (_database == 'mysql') {
-      // ignore: unnecessary_new
-      var settings = new ConnectionSettings(
-          host: _host,
-          port: _port,
-          user: _username,
-          password: _password,
-          db: _db);
-      var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 200));
+      final connection = await MySQLConnection.createConnection(
+        host: _host,
+        port: _port,
+        userName: _username,
+        password: _password,
+        databaseName: _db, // optional
+      );
+
+      await connection.connect();
       db = await MySql()
           .getOption(connection, table, column: column, where: where!);
     } else {}
@@ -69,8 +70,7 @@ class DChiselDB {
     return db;
   }
 
-  Future<Map<String, dynamic>> create(table,
-      {required Map<String, dynamic>? data}) async {
+  Future<Response> create(table, {required Map<String, dynamic>? data}) async {
     var db;
 
     if (_database == 'postgre') {
@@ -79,22 +79,22 @@ class DChiselDB {
       await connection.open();
       db = await Postgre().create(connection, table, data: data);
     } else if (_database == 'mysql') {
-      // ignore: unnecessary_new
-      var settings = new ConnectionSettings(
-          host: _host,
-          port: _port,
-          user: _username,
-          password: _password,
-          db: _db);
-      var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 200));
+      final connection = await MySQLConnection.createConnection(
+        host: _host,
+        port: _port,
+        userName: _username,
+        password: _password,
+        databaseName: _db, // optional
+      );
+
+      await connection.connect();
       db = await MySql().create(connection, table, data: data);
     } else {}
 
     return db;
   }
 
-  Future<Map<String, dynamic>> deleteAll(table) async {
+  Future<Response> deleteAll(table) async {
     var db;
 
     if (_database == 'postgre') {
@@ -103,23 +103,22 @@ class DChiselDB {
       await connection.open();
       db = await Postgre().deleteAll(connection, table);
     } else if (_database == 'mysql') {
-      // ignore: unnecessary_new
-      var settings = new ConnectionSettings(
-          host: _host,
-          port: _port,
-          user: _username,
-          password: _password,
-          db: _db);
-      var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 200));
+      final connection = await MySQLConnection.createConnection(
+        host: _host,
+        port: _port,
+        userName: _username,
+        password: _password,
+        databaseName: _db, // optional
+      );
+
+      await connection.connect();
       db = await MySql().deleteAll(connection, table);
     } else {}
 
     return db;
   }
 
-  Future<Map<String, dynamic>> deleteOption(table,
-      {required List? where}) async {
+  Future<Response> deleteOption(table, {required List? where}) async {
     var db;
 
     if (_database == 'postgre') {
@@ -129,21 +128,22 @@ class DChiselDB {
       db = await Postgre().deleteOption(connection, table, where: where);
     } else if (_database == 'mysql') {
       // ignore: unnecessary_new
-      var settings = new ConnectionSettings(
-          host: _host,
-          port: _port,
-          user: _username,
-          password: _password,
-          db: _db);
-      var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 200));
+      final connection = await MySQLConnection.createConnection(
+        host: _host,
+        port: _port,
+        userName: _username,
+        password: _password,
+        databaseName: _db, // optional
+      );
+
+      await connection.connect();
       db = await MySql().deleteOption(connection, table, where: where);
     } else {}
 
     return db;
   }
 
-  Future<Map<String, dynamic>> update(table,
+  Future<Response> update(table,
       {required Map<String, dynamic>? data, required List? where}) async {
     var db;
 
@@ -153,15 +153,15 @@ class DChiselDB {
       await connection.open();
       db = await Postgre().update(connection, table, data: data, where: where);
     } else if (_database == 'mysql') {
-      // ignore: unnecessary_new
-      var settings = new ConnectionSettings(
-          host: _host,
-          port: _port,
-          user: _username,
-          password: _password,
-          db: _db);
-      var connection = await MySqlConnection.connect(settings);
-      await Future.delayed(Duration(microseconds: 200));
+      final connection = await MySQLConnection.createConnection(
+        host: _host,
+        port: _port,
+        userName: _username,
+        password: _password,
+        databaseName: _db, // optional
+      );
+
+      await connection.connect();
       db = await MySql().update(connection, table, data: data, where: where);
     } else {}
 
