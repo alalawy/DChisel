@@ -25,5 +25,10 @@ dependencies:
 executables:
   dchisel: dchisel
 
+platforms:
+  windows:
+  linux:
+  macos:
+
 #dev_dependencies:
   #pedantic: ^1.10.0

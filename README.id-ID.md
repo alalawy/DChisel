@@ -9,10 +9,16 @@ Dchisel adalah dart framework simpel untuk membuat REST API
 
 ## Fitur-Fitur
 
-* kustomisasi host server dan port
+* Custom host server and port
 * GET, POST, PUT, DELETE, PATCH Routes
-* CRUD ORM pada database PostgreSQL
-* CRUD ORM pada database MySQL
+* ORM CRUD to PostgreSQL
+* ORM CRUD to MySQL
+* Global Middleware
+* Specific Route Middleware
+* Auth
+* Base Response Ok & Forbidden
+* Header CORS
+* Base64 decode to File
 
 ## Penggunaan
 
