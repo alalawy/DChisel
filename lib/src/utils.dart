@@ -56,11 +56,11 @@ dynamic verifyJwt(String token, String secret) {
     try {
       final jwt = JWT.verify(token, SecretKey(secret));
       return jwt;
-    } on JWTExpiredError {
+    } on JWTExpiredException {
       print('jwt expired');
-    } on JWTError catch (ex) {
-      return null;
+    } on JWTException catch (ex) {
       print(ex.message); // ex: invalid signature
+      return null;
     }
   } else {
     return null;

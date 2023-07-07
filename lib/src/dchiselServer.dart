@@ -117,19 +117,16 @@ class DChisel {
         routes.get(route[0][i], handler[0][i], use: routeMiddleware[0][i]);
       }
       for (var i = 0; i < route[1].length; i++) {
-        routes.post(route[1][i], handler[1][i], use: routeMiddleware[0][i]);
+        routes.post(route[1][i], handler[1][i], use: routeMiddleware[1][i]);
       }
       for (var i = 0; i < route[2].length; i++) {
-        routes.put(route[2][i], handler[2][i], use: routeMiddleware[0][i]);
+        routes.put(route[2][i], handler[2][i], use: routeMiddleware[2][i]);
       }
       for (var i = 0; i < route[3].length; i++) {
-        routes.delete(route[3][i], handler[3][i], use: routeMiddleware[0][i]);
+        routes.delete(route[3][i], handler[3][i], use: routeMiddleware[3][i]);
       }
       for (var i = 0; i < route[4].length; i++) {
-        routes.patch(route[4][i], handler[4][i], use: routeMiddleware[0][i]);
-      }
-      for (var i = 0; i < route[4].length; i++) {
-        routes.patch(route[4][i], handler[4][i], use: routeMiddleware[0][i]);
+        routes.patch(route[4][i], handler[4][i], use: routeMiddleware[4][i]);
       }
 
       return routes;
